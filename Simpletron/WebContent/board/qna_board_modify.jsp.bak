@@ -1,0 +1,194 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<%@ page import="net.board.db.*" %>
+<%
+	BoardBean board = (BoardBean)request.getAttribute("boarddata");
+%>
+
+<!DOCTYPE HTML>
+<!--
+	Minimaxing by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+
+	<head>
+		<title>Two Column 2 - Minimaxing by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+
+								<header id="header">
+									<h1><a href="index.html" id="logo">Simpletron</a></h1>
+									<nav id="nav">
+										<a href="index.html">Main</a>
+										<a href="simpletron.jsp">SimpleTron</a>
+										<a href="BoardList.bo" class="current-page-item">Board</a>
+										<a href="help.html">help</a>
+									</nav>
+								</header>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Main -->
+				<div id="main">
+					<h2 align="center" >MVC 게시판</h2>
+					<form action="BoardModifyAction.bo" method="post" name="modifyform">
+						<input type="hidden" name="BOARD_NUM" value=<%=board.getBOARD_NUM() %>>
+						<table width=70% border="0" cellpadding="0" cellspacing="0" style="margin:auto auto auto auto">	
+							<tr>
+								<td height="16" style="font-family:돋음; font-size:12">
+									<div align="center">제 목</div>
+								</td>
+								<td>
+									<input name="BOARD_SUBJECT" size="50" maxlength="100" 
+										value="<%=board.getBOARD_SUBJECT()%>">
+								</td>
+							</tr>
+							<tr>
+								<td style="font-family:돋음; font-size:12">
+									<div align="center">내 용</div>
+								</td>
+								<td>
+									<textarea name="BOARD_CONTENT" cols="67" rows="15"><%=board.getBOARD_CONTENT() %></textarea>
+								</td>
+							</tr>
+							<%if(!(board.getBOARD_FILE()==null)){ %>
+							<tr>
+								<td style="font-family:돋음; font-size:12">
+									<div align="center">파일 첨부</div>
+								</td>
+								<td>
+									&nbsp;&nbsp;<%=board.getBOARD_FILE() %>
+								</td>
+							</tr>
+							<%} %>
+							<tr>
+								<td height="16" style="font-family:돋음; font-size:12">
+									<div align="center">비밀번호</div>
+								</td>
+								<td>
+									<input name="BOARD_PASS" type="password">
+								</td>
+							</tr>
+							
+							<tr bgcolor="cccccc">
+								<td colspan="2" style="height:1px;">
+								</td>
+							</tr>
+							<tr><td colspan="2">&nbsp;</td></tr>
+							
+							<tr align="center" valign="middle">
+								<td colspan="5">
+									<font size=2>
+									<a href="javascript:modifyboard()">[수정]</a>&nbsp;&nbsp;
+									<a href="javascript:history.go(-1)">[뒤로]</a>&nbsp;&nbsp;
+									</font>
+								</td>
+							</tr>
+						</table>
+						</form>
+				</div>
+
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-8 col-12-medium">
+
+								<section>
+									<h2>How about a truckload of links?</h2>
+									<div>
+										<div class="row">
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Suspendisse varius ipsum</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+												</ul>
+											</div>
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Vitae magna sed dolore</a></li>
+												</ul>
+											</div>
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Suspendisse varius ipsum</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+												</ul>
+											</div>
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Vitae magna sed dolore</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</section>
+
+							</div>
+							<div class="col-4 col-12-medium">
+
+								<section>
+									<h2>Something of interest</h2>
+									<p>Duis neque nisi, dapibus sed mattis quis, rutrum accumsan sed.
+									Suspendisse eu varius nibh. Suspendisse vitae magna eget odio amet
+									mollis justo facilisis quis. Sed sagittis mauris amet tellus gravida
+									lorem ipsum dolor sit blandit.</p>
+									<footer class="controls">
+										<a href="#" class="button">Oh, please continue ....</a>
+									</footer>
+								</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+
+								<div id="copyright">
+									&copy; Untitled. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

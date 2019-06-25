@@ -1,0 +1,253 @@
+<%@ page language="java" contentType="text/html; charset=EUC-KR"%>
+<!DOCTYPE HTML>
+<!--
+	Minimaxing by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="net.board.db.*" %>
+
+<%
+	List boardList=(List)request.getAttribute("boardlist");
+	int listcount=((Integer)request.getAttribute("listcount")).intValue();
+	int nowpage=((Integer)request.getAttribute("page")).intValue();
+	int maxpage=((Integer)request.getAttribute("maxpage")).intValue();
+	int startpage=((Integer)request.getAttribute("startpage")).intValue();
+	int endpage=((Integer)request.getAttribute("endpage")).intValue();
+%>
+	<head>
+		<title>Two Column 2 - Minimaxing by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body>
+		<div id="page-wrapper">
+
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-12">
+
+								<header id="header">
+									<h1><a href="index.html" id="logo">Simpletron</a></h1>
+									<nav id="nav">
+										<a href="index.html">Main</a>
+										<a href="simpletron.jsp">SimpleTron</a>
+										<a href="BoardList.bo" class="current-page-item">Board</a>
+										<a href="help.html">help</a>
+									</nav>
+								</header>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<!-- Main -->
+				<div id="main">
+				<h2 align="center" >MVC 게시판</h2>
+								<table width=70% border="0" cellpadding="0" cellspacing="0" style="margin:auto auto auto auto">
+										<%
+										if(listcount > 0){
+										%>
+											
+											<tr align="center" valign="middle" bordercolor="#333333">
+												<td style="font-family:Tahoma;font-size:8pt;" width="8%" height="26">
+													<div align="center">번호</div>
+												</td>
+												<td style="font-family:Tahoma;font-size:8pt;" width="50%">
+													<div align="center">제목</div>
+												</td>
+												<td style="font-family:Tahoma;font-size:8pt;" width="14%">
+													<div align="center">작성자</div>
+												</td>
+												<td style="font-family:Tahoma;font-size:8pt;" width="17%">
+													<div align="center">날짜</div>
+												</td>
+												<td style="font-family:Tahoma;font-size:8pt;" width="11%">
+													<div align="center">조회수</div>
+												</td>
+											</tr>
+											
+											<%
+												for(int i=0;i<boardList.size();i++){
+													BoardBean bl=(BoardBean)boardList.get(i);
+											%>
+											<tr align="center" valign="middle" bordercolor="#333333"
+												onmouseover="this.style.backgroundColor='F8F8F8'"
+												onmouseout="this.style.backgroundColor=''">
+												<td height="23" style="font-family:Tahoma;font-size:10pt;">
+													<%=bl.getBOARD_NUM()%>
+												</td>
+												
+												<td style="font-family:Tahoma;font-size:10pt;">
+													<div align="left">
+													<%if(bl.getBOARD_RE_LEV()!=0){ %>
+														<%for(int a=0;a<=bl.getBOARD_RE_LEV()*2;a++){ %>
+														&nbsp;
+														<%} %>
+														▶
+													<%}else{ %>
+														▶
+													<%} %>
+													<a href="./BoardDetailAction.bo?num=<%=bl.getBOARD_NUM()%>">
+														<%=bl.getBOARD_SUBJECT()%>
+													</a>
+													</div>
+												</td>
+												
+												<td style="font-family:Tahoma;font-size:10pt;">
+													<div align="center"><%=bl.getBOARD_NAME() %></div>
+												</td>
+												<td style="font-family:Tahoma;font-size:10pt;">
+													<div align="center"><%=bl.getBOARD_DATE() %></div>
+												</td>	
+												<td style="font-family:Tahoma;font-size:10pt;">
+													<div align="center"><%=bl.getBOARD_READCOUNT() %></div>
+												</td>
+											</tr>
+											<%} %>
+											<tr align=center height=20>
+												<td colspan=7 style=font-family:Tahoma;font-size:10pt;>
+													<%if(nowpage<=1){ %>
+													[이전]&nbsp;
+													<%}else{ %>
+													<a href="./BoardList.bo?page=<%=nowpage-1 %>">[이전]</a>&nbsp;
+													<%} %>
+													
+													<%for(int a=startpage;a<=endpage;a++){
+														if(a==nowpage){%>
+														[<%=a %>]
+														<%}else{ %>
+														<a href="./BoardList.bo?page=<%=a %>">[<%=a %>]</a>&nbsp;
+														<%} %>
+													<%} %>
+													
+													<%if(nowpage>=maxpage){ %>
+													[다음]
+													<%}else{ %>
+													<a href="./BoardList.bo?page=<%=nowpage+1 %>">[다음]</a>
+													<%} %>
+												</td>
+											</tr>
+											<%
+											}
+											else
+											{
+											%>
+											<tr align="center" valign="middle">
+												<td colspan="4">MVC 게시판</td>
+												<td align=right>
+													<font size=2>등록된 글이 없습니다.</font>
+												</td>
+											</tr>
+											<%
+											}
+											%>
+											<tr align="center">
+												<td align="left">
+													<a href="./simpletron/simpletron.jsp">[Simpletron]</a>
+												</td>
+												<td colspan="5" align="right">
+													<a href="./BoardWrite.bo">[글쓰기]</a>
+												</td>
+											</tr>
+										</table>
+							
+				</div>
+
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<div class="container">
+						<div class="row">
+							<div class="col-8 col-12-medium">
+
+								<section>
+									<h2>How about a truckload of links?</h2>
+									<div>
+										<div class="row">
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Suspendisse varius ipsum</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+												</ul>
+											</div>
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Vitae magna sed dolore</a></li>
+												</ul>
+											</div>
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Suspendisse varius ipsum</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+												</ul>
+											</div>
+											<div class="col-3 col-6-medium col-12-small">
+												<ul class="link-list">
+													<li><a href="#">Quis accumsan lorem</a></li>
+													<li><a href="#">Sed neque nisi consequat</a></li>
+													<li><a href="#">Eget et amet consequat</a></li>
+													<li><a href="#">Dapibus sed mattis blandit</a></li>
+													<li><a href="#">Vitae magna sed dolore</a></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</section>
+
+							</div>
+							<div class="col-4 col-12-medium">
+
+								<section>
+									<h2>Something of interest</h2>
+									<p>Duis neque nisi, dapibus sed mattis quis, rutrum accumsan sed.
+									Suspendisse eu varius nibh. Suspendisse vitae magna eget odio amet
+									mollis justo facilisis quis. Sed sagittis mauris amet tellus gravida
+									lorem ipsum dolor sit blandit.</p>
+									<footer class="controls">
+										<a href="#" class="button">Oh, please continue ....</a>
+									</footer>
+								</section>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+
+								<div id="copyright">
+									&copy; Untitled. All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
