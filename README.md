@@ -1,10 +1,10 @@
-# Step 1
+## Step 1
 Add the boardUpload folder to WebContent so that the QnA bulletin works well.
 
-# Step 2
+## Step 2
 Create a database and create a table using board.sql in board folder.
 
-# Step 3
+## Step 3
 Change the user and password same with your database
 1. META-INF -> context.xml
 2. WEB-INF -> classes -> sboard -> DBConnectionMgr.java
